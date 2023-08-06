@@ -14,7 +14,7 @@ import Card from "./Card";
  * 
  * App --> Carousel --> Card
  */
- function Carousel({ photos, title }) {
+function Carousel({ photos, title }) {
   const [currCardIdx, setCurrCardIdx] = useState(0);
   const total = photos.length;
 
@@ -32,22 +32,26 @@ import Card from "./Card";
     <div className="Carousel">
       <h1>{title}</h1>
       <div className="Carousel-main">
-        <i
-          className="bi bi-arrow-left-circle"
-          data-testid="left-arrow"
-          onClick={goBackward}
-        />
+        {currCardIdx > 0 && (
+          <i
+            className="bi bi-arrow-left-circle"
+            data-testid="left-arrow"
+            onClick={goBackward}
+          />
+        )}
         <Card
           caption={currCard.caption}
           src={currCard.src}
           currNum={currCardIdx + 1}
           totalNum={total}
         />
-        <i
-          className="bi bi-arrow-right-circle"
-          data-testid="right-arrow"
-          onClick={goForward}
-        />
+        {currCardIdx < total - 1 && (
+          <i
+            className="bi bi-arrow-right-circle"
+            data-testid="right-arrow"
+            onClick={goForward}
+          />
+        )}
       </div>
     </div>
   );

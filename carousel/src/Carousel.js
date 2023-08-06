@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./Carousel.css";
 import Card from "./Card";
 
@@ -16,14 +16,17 @@ import Card from "./Card";
  */
  function Carousel({ photos, title }) {
   const [currCardIdx, setCurrCardIdx] = useState(0);
-
-  const currCard = photos[currCardIdx];
   const total = photos.length;
 
-  //Increments currCardIdx state by 1
   function goForward() {
-    setCurrCardIdx(currCardIdx + 1);
+    setCurrCardIdx((prevIdx) => (prevIdx + 1) % total);
   }
+
+  function goBackward() {
+    setCurrCardIdx((prevIdx) => (prevIdx - 1 + total) % total);
+  }
+
+  const currCard = photos[currCardIdx];
 
   return (
     <div className="Carousel">
@@ -31,7 +34,8 @@ import Card from "./Card";
       <div className="Carousel-main">
         <i
           className="bi bi-arrow-left-circle"
-          onClick={goForward}
+          data-testid="left-arrow"
+          onClick={goBackward}
         />
         <Card
           caption={currCard.caption}
@@ -41,6 +45,7 @@ import Card from "./Card";
         />
         <i
           className="bi bi-arrow-right-circle"
+          data-testid="right-arrow"
           onClick={goForward}
         />
       </div>
